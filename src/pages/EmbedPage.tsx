@@ -13,9 +13,12 @@ import ApiKeyInputModal from "../components/ApiKeyInputModal"
 import { queryClient, useEditApiKey, useIsLoggedIn, useApiKey, client, useCheckWhitelist } from "../util"
 import { useEffectOnce } from "usehooks-ts"
 
-const EmbedPage = () => {
+interface EmbedPage {
+    configText?: string;
+}
+const EmbedPage: React.FC<EmbedPage> = ({ configText }: { configText?: string }) => {
     const toast = useToast()
-    const { config: initialConfig, error } = useSearchParamConfig()
+    const { config: initialConfig, error } = useSearchParamConfig(configText)
     const [authVisible, setAuthVisible] = useState(false)
     const [config, setConfig] = useState<UrlConfig>(initialConfig ?? urlConfigSchema.getDefault())
     const [generating, setGenerating] = useState(false)
